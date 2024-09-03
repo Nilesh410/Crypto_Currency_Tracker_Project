@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 function CoinTable()
 {
-  const [count,setCount]=useState(0);
+  /* const [count,setCount]=useState(0);
   const [flag,setFlag]=useState(false);
   async function api_fetch()
   {
@@ -22,6 +22,11 @@ function CoinTable()
            {flag && <h1>Flag is True </h1>}
            <button onClick={()=>setFlag(!flag)}>Toggle</button>
 
+        </>
+     ); */
+     return (
+        <> 
+           Coin Table
         </>
      );
 }
