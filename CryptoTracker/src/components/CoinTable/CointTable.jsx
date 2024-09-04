@@ -1,35 +1,30 @@
 import { useEffect, useState } from 'react'
 import { fetchCoinData } from '../services/fetchCoinData';
+import { useQuery } from '@tanstack/react-query';
+
 function CoinTable() {
-    /* const [count,setCount]=useState(0);
-    const [flag,setFlag]=useState(false);
-    async function api_fetch()
+    const [page,setPage]=useState(1);
+    const {data,isLoading,isError,error}=useQuery({
+                   queryKey:['coins',page],
+                   queryFn:()=>fetchCoinData(page,"inr"),
+                   retry:2,
+                   retryDelay:1000,
+                   cacheTime:1000*60*2,
+                });
+    useEffect(()=>{
+        console.log(data);
+    },[data])           
+    if(isLoading)
     {
-      const response=await fetch("https://api.coingecko.com/api/v3/ping");
-      const result=await response.json();
-      console.log(result);
+        return <div>Loading...</div>;
     }
-    useEffect(()=>{api_fetch();
-                   },[count]) 
-    useEffect(()=>{console.log("Toggle Pressed")},[flag])
-       return (
-          <>
-             CoinTable
-             {count}
-             <br />
-             <button onClick={()=>setCount(count+1)}>Increment</button>
-             <br/>
-             {flag && <h1>Flag is True </h1>}
-             <button onClick={()=>setFlag(!flag)}>Toggle</button>
-  
-          </>
-       ); */
-    useEffect(() => {
-        fetchCoinData(1,"inr");
-    }, [])
+    if(isError)
+    {
+        return <div>Error:{error.message}</div>;
+    }
     return (
         <>
-            Coin Table
+            Coin Table <button onClick={()=>setPage(page+1)}>Click</button> {page}
         </>
     );
 }
